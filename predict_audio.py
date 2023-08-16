@@ -5,7 +5,6 @@ import os
 import keras
 import sklearn
 import librosa
-import matplotlib as plt
 
 eps = np.finfo(np.float).eps
 
