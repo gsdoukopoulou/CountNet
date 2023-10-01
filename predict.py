@@ -8,7 +8,7 @@ import librosa
 from keras import backend as K
 
 
-eps = np.finfo(float).eps #np.
+eps = np.finfo(np.float6).eps
 
 
 def class_mae(y_true, y_pred):
