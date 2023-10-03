@@ -22,9 +22,9 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
 
 def count(audio, model, scaler):
     # compute STFT
-    print(len(audio))
-    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T
-
+    # len(audio) 80000 (D*fs, D = 5s, fs = 16KHz)
+    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
+    print(np.size(X))
     # apply global (featurewise) standardization to mean1, var0
     X = scaler.transform(X)
 
