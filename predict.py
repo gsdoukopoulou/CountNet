@@ -11,7 +11,7 @@ from keras import backend as K
 eps = np.finfo(np.float64).eps # np.float64 instead of np.float
 
 
-def class_mae(y_true, y_pred):
+def class_mae(y_true, y_pred): # calculate mean absolute error
     return K.mean(
         K.abs(
             K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)
@@ -22,6 +22,7 @@ def class_mae(y_true, y_pred):
 
 def count(audio, model, scaler):
     # compute STFT
+    print(len(audio))
     X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T
 
     # apply global (featurewise) standardization to mean1, var0
