@@ -30,8 +30,8 @@ def count(audio, model, scaler):
     # X = scaler.transform(X)
     X = audio
     # cut to input shape length (500 frames x 201 STFT bins)
-    X = X[:500, :]
-
+    # X = X[:500, :]
+    X = X[:500, ]
     # apply l2 normalization
     # Theta = np.linalg.norm(X, axis=1) + eps
     # X /= np.mean(Theta)
