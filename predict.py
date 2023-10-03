@@ -24,24 +24,24 @@ def count(audio, model, scaler):
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
 
-    # X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
-    #
-    # # apply global (featurewise) standardization to mean1, var0
-    # X = scaler.transform(X)
-    X = audio
+    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
+
+    # apply global (featurewise) standardization to mean1, var0
+    X = scaler.transform(X)
+    # X = audio
     # cut to input shape length (500 frames x 201 STFT bins)
-    # X = X[:500, :]
-    X = X[:500, ]
+    X = X[:500, :]
+    # X = X[:500, ]
     # apply l2 normalization
-    # Theta = np.linalg.norm(X, axis=1) + eps
-    # X /= np.mean(Theta)
+    Theta = np.linalg.norm(X, axis=1) + eps
+    X /= np.mean(Theta)
 
     # add sample dimension
     X = X[np.newaxis, ...]
 
     if len(model.input_shape) == 4:
         X = X[:, np.newaxis, ...]
-
+    print(X.shape)
     ys = model.predict(X, verbose=0)
     return np.argmax(ys, axis=1)[0]
 
