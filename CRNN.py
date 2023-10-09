@@ -26,7 +26,7 @@ model.summary()
 
 model = Sequential()
 model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default', input_shape=(1, 500, 201)))
-model.add(Conv2D(64, 3, 3, border_mode='same', input_shape=(1, 500, 201)))
+model.add(Conv2D(64, 3, 3, border_mode='same'))
 
 # model = Sequential([
 #     ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
