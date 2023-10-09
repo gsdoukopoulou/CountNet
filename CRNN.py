@@ -36,7 +36,7 @@ model.add(MaxPooling2D(pool_size=(3, 3), border_mode='valid', name='pool2', dim_
 model.add(Permute((2, 1, 3), name='permute_1'))
 model.add(Reshape((53, 1280), name='reshape_1'))
 model.add(LSTM(40, return_sequences=True, name='lstm_1'))
-model.add(MaxPooling1D(pool_size=2, name='maxpooling1d_1'))
+model.add(MaxPooling1D(pool_length=2, name='maxpooling1d_1'))
 model.add(Flatten(name='flatten_1'))
 model.add(Dense(11, name='dense_1'))
 model.add(Activation('softmax', name='activation_1'))
