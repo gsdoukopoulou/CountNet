@@ -37,13 +37,16 @@ def count(audio, model, scaler):
     # X /= np.mean(Theta)
 
     # add sample dimension
-    X = X[np.newaxis, ...]
+    # X = X[np.newaxis, ...]
+
+    # reshape the data to match the expected model dimension
+    X = X.reshape(1 , 1 , 500 , 1)
 
     if len(model.input_shape) == 4:
         X = X[:, np.newaxis, ...]
     print(X.shape)
     print(model.input_shape)
-    ys = model.predict(X, verbose=0) # as it is X is (1, 1 500, 201)
+    ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
     return np.argmax(ys, axis=1)[0]
 
 
