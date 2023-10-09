@@ -15,7 +15,7 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
 
 # load model
 model = keras.models.load_model(
-    os.path.join('models' , 'CRNN.h5') ,
+    os.path.join('models', 'CRNN.h5') ,
     custom_objects={
         'class_mae': class_mae ,
         'exp': K.exp
@@ -43,7 +43,7 @@ model.add(Activation('softmax', name='activation_1'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['class_mae'])
 
-model.load_weights('CRNN.h5')
+model.load_weights('models/CRNN.h5')
 
 # model = Sequential([
 #     ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
