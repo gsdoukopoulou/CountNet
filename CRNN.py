@@ -2,7 +2,7 @@ import os
 import keras
 from keras import backend as K
 from keras import layers
-from tensorflow.keras.models import Sequential
+from keras.models import Sequential
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
     return K.mean(
@@ -24,7 +24,7 @@ model = keras.models.load_model(
 
 model.summary()
 
-model = keras.Sequential([
+model = Sequential([
     layers.ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
     layers.Conv2D(64, (3, 3), activation='relu', name='conv1'),
     layers.Conv2D(32, (3, 3), activation='relu', name='conv2'),
