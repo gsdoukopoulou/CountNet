@@ -41,7 +41,7 @@ model.add(Flatten(name='flatten_1'))
 model.add(Dense(11, name='dense_1'))
 model.add(Activation('softmax', name='activation_1'))
 
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['class_mae'])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_mae])
 
 model.load_weights('models/CRNN.h5')
 
