@@ -31,7 +31,7 @@ model = Sequential()
 model.add(ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'))
 
 # Layer 2: Conv2D
-model.add(Conv2D(64, (3, 3), activation='relu', name='conv1'))
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', name='conv1'))
 
 # Layer 3: Conv2D
 model.add(Conv2D(32, (3, 3), activation='relu', name='conv2'))
