@@ -43,6 +43,8 @@ model.add(Activation('softmax', name='activation_1'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['class_mae'])
 
+model.load_weights('CRNN.h5')
+
 # model = Sequential([
 #     ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
 #     Conv2D(64, kernel_size=(3, 3), input_shape=(1, 500, 201), activation='relu', name='conv1'),
