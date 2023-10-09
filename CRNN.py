@@ -25,7 +25,7 @@ model = keras.models.load_model(
 model.summary()
 
 model = Sequential()
-model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default'))
+model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default', input_shape=(1, 500, 201)))
 model.add(Conv2D(64, 3, 3, border_mode='same', input_shape=(1, 500, 201)))
 
 # model = Sequential([
