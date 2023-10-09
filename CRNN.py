@@ -26,7 +26,7 @@ model.summary()
 
 model = Sequential([
     ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
-    Conv2D(64, kernel_size=(3, 3), activation='relu', name='conv1'),
+    Conv2D(64, kernel_size=(3, 3), input_shape=(1, 500, 201), activation='relu', name='conv1'),
     Conv2D(32, kernel_size=(3, 3), activation='relu', name='conv2'),
     MaxPooling2D(pool_size=(3, 3), name='pool1'),
     Conv2D(128, kernel_size=(3, 3), activation='relu', name='conv3'),
