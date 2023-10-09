@@ -2,6 +2,7 @@ import os
 import keras
 from keras import backend as K
 from keras import layers
+from tensorflow.keras.models import Sequential
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
     return K.mean(
