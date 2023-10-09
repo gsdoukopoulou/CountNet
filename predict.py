@@ -59,10 +59,10 @@ if __name__ == '__main__':
         help='audio file (samplerate 16 kHz) of 5 seconds duration'
     )
 
-    parser.add_argument(
-        '--model', default='CRNN',
-        help='model name'
-    )
+    # parser.add_argument(
+    #     '--model', default='CRNN',
+    #     help='model name'
+    # )
 
     args = parser.parse_args()
 
