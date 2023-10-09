@@ -34,8 +34,8 @@ model.add(Conv2D(128, 3, 3, border_mode='valid', activation='relu', name='conv3'
 model.add(Conv2D(64, 3, 3, border_mode='valid', activation='relu', name='conv4', dim_ordering='th'))
 model.add(MaxPooling2D(pool_size=(3, 3), border_mode='valid', name='pool2', dim_ordering='th'))
 model.add(Permute((2, 1, 3), name='permute_1'))
-# model.add(Reshape((56, 1472), name='reshape_1'))
-# model.add(LSTM(40, return_sequences=True, name='lstm_1'))
+model.add(Reshape((52, 1280), name='reshape_1'))
+model.add(LSTM(40, return_sequences=True, name='lstm_1'))
 
 # model = Sequential([
 #     ZeroPadding2D(padding=(0, 0), input_shape=(1, 500, 201), name='zeropadding2d_input_1'),
