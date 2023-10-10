@@ -12,18 +12,6 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
         axis=-1
     )
 
-
-# load model
-model = keras.models.load_model(
-    os.path.join('models', 'CRNN.h5') ,
-    custom_objects={
-        'class_mae': class_mae ,
-        'exp': K.exp
-    }
-)
-
-model.summary()
-
 model = Sequential()
 model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default', input_shape=(1, 500, 201), name='zero1'))
 model.add(Conv2D(64, 3, 3, border_mode='valid', activation='relu', name='conv1', dim_ordering='th'))
