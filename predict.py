@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     model = Sequential()
     # the model for the spectrogram input
-    model.add(ZeroPadding2D(padding=(0 , 0) , dim_ordering='default' , input_shape=(80000 , 1) , name='zero1')) #input_shape=(1 , 500 , 201)
+    model.add(ZeroPadding2D(padding=(0 , 0) , dim_ordering='default' , input_shape=(1, 1, 80000) , name='zero1')) #input_shape=(1 , 500 , 201)
     model.add(Conv2D(64 , 3 , 3 , border_mode='valid' , activation='relu' , name='conv1' , dim_ordering='th'))
     model.add(Conv2D(32 , 3 , 3 , border_mode='valid' , activation='relu' , name='conv2' , dim_ordering='th'))
     model.add(MaxPooling2D(pool_size=(3 , 3) , border_mode='valid' , name='pool1' , dim_ordering='th'))
