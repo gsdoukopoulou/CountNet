@@ -96,7 +96,7 @@ if __name__ == '__main__':
     # model.add(Activation('softmax' , name='activation_1'))
 
     # try to build the model for the raw audio input
-    model.add(ZeroPadding1D(padding=0 , dim_ordering='default' , input_shape=(1 , 80000) , name='zero1'))
+    model.add(ZeroPadding1D(padding=0, input_shape=(1 , 80000) , name='zero1'))
     model.add(Conv1D(64 , 3 , border_mode='valid' , activation='relu' , name='conv1'))
     model.add(Conv1D(64 , kernel_size=3 , activation='relu' , name='conv2'))
     model.add(MaxPooling1D(pool_size=3 , name='pool1'))
