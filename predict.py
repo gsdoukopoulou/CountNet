@@ -45,7 +45,7 @@ def count(audio, model, scaler):
     #     X = X[:, np.newaxis, ...]
 
     print(X.shape)
-    print(model.input_shape)
+    # print(model.input_shape)
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
     return np.argmax(ys, axis=1)[0]
