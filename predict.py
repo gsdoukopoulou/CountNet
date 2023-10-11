@@ -41,8 +41,8 @@ def count(audio, model, scaler):
     # add sample dimension
     X = X[np.newaxis, ...]
 
-    # if len(model.input_shape) == 4:
-    #     X = X[:, np.newaxis, ...]
+    if len(model.input_shape) == 4:
+        X = X[:, np.newaxis, ...]
 
     print(X.shape)
     # print(model.input_shape)
