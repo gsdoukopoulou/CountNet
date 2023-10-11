@@ -105,13 +105,13 @@ if __name__ == '__main__':
     num_classes = 11  # Change this based on your classification task
     model.add(Dense(num_classes , name='dense_1'))
     model.add(Activation('softmax' , name='activation_1'))
-
+    model.summary()
     model.compile(optimizer='adam' , loss='categorical_crossentropy' , metrics=[class_mae])
 
     model.load_weights('models/CRNN.h5', by_name=True) #, skip_mismatch = True
 
     # print model configuration
-    model.summary()
+
     # save as svg file
     # load standardisation parameters
     scaler = sklearn.preprocessing.StandardScaler()
