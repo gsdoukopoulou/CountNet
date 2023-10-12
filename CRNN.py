@@ -3,7 +3,7 @@ import keras
 import h5py
 from keras import backend as K
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, LSTM, Permute, Reshape, Dropout, MaxPooling1D, ZeroPadding2D, ZeroPadding1D, Conv1D
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
     return K.mean(
@@ -53,8 +53,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_
 # model.load_weights('models/CRNN.h5')
 
 # # step 1: load all the weights of the pretrained model
-pretrained_weights_file = h5py.File('models/CRNN.h5' , 'r')
-print(pretrained_weights_file)
-pretrained_weights = pretrained_weights_file['conv1']
-reshaped_weights = pretrained_weights.transpose(3, 1, 2, 0)
-model.get_layer('conv1').set_weights([reshaped_weights])
+pretrained_model = load_model('my_model_weights.h5', custom_objects={'conv1'})
+# pretrained_weights = pretrained_weights_file['conv1']
+# reshaped_weights = pretrained_weights.transpose(3, 1, 2, 0)
+# model.get_layer('conv1').set_weights([reshaped_weights])
