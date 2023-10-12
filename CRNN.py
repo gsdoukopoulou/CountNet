@@ -37,7 +37,7 @@ model.add(ZeroPadding1D(padding=0 , input_shape=(80000, 1) , name='zero1'))
 model.add(Conv1D(64 , 3 , border_mode='valid' , activation='relu' , name='conv1'))
 
 # the output tensor's shape is [3,1,1,64]
-# However, the pre-trained model's output tensor is [64,1,3,3]. So, I need to reshape it to [3,]
+# However, the pre-trained model's output tensor is [64,1,3,3]. So, I need to reshape it to [3,...]
 
 # model.add(Conv1D(32 , 3 , activation='relu' , name='conv2'))
 # model.add(MaxPooling1D(pool_length=3 , name='pool1'))
@@ -55,7 +55,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_
 # # step 1: load all the weights of the pretrained model
 pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': class_mae,'exp': K.exp})
 conv1_pretrained = pretrained_model.get_layer('conv1')
-
+print(type(conv1_pretrained))
 # pretrained_weights = pretrained_weights_file['conv1']
 # reshaped_weights = pretrained_weights.transpose(3, 1, 2, 0)
 model.get_layer('conv1').set_weights([conv1_pretrained])
