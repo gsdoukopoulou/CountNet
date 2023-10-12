@@ -10,6 +10,7 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, LSTM,
 from keras.models import Sequential
 
 
+
 eps = np.finfo(np.float64).eps # np.float64 instead of np.float
 
 
@@ -98,13 +99,15 @@ if __name__ == '__main__':
     # try to build the model for the raw audio input
     model.add(ZeroPadding1D(padding=0 , input_shape=(80000 , 1) , name='zero1'))
     model.add(Conv1D(64 , 3 , border_mode='valid' , activation='relu' , name='conv1'))
-    model.add(Conv1D(32 , 3 , activation='relu' , name='conv2'))
-    model.add(MaxPooling1D(pool_length=3 , name='pool1'))
-    model.add(LSTM(40 , return_sequences=True , name='lstm'))
-    model.add(MaxPooling1D(pool_length=2 , name='pool2'))
-    num_classes = 11  # Change this based on your classification task
-    model.add(Dense(num_classes , name='dense_1'))
-    model.add(Activation('softmax' , name='activation_1'))
+
+    # model.add(Conv1D(32 , 3 , activation='relu' , name='conv2'))
+    # model.add(MaxPooling1D(pool_length=3 , name='pool1'))
+    # model.add(LSTM(40 , return_sequences=True , name='lstm'))
+    # model.add(MaxPooling1D(pool_length=2 , name='pool2'))
+    # num_classes = 11  # Change this based on your classification task
+    # model.add(Dense(num_classes , name='dense_1'))
+    # model.add(Activation('softmax' , name='activation_1'))
+
     model.summary()
     model.compile(optimizer='adam' , loss='categorical_crossentropy' , metrics=[class_mae])
 
