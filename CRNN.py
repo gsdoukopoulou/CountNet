@@ -55,7 +55,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_
 # # # step 1: load all the weights of the pretrained model
 pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': class_mae,'exp': K.exp})
 conv1_pretrained = pretrained_model.get_layer('conv1')
-print(model.conv1.output_shape)
+conv1_pretrained.add(Permute((3, 2, 4, 1) , name='permute_1'))
 # pretrained_weights = pretrained_weights_file['conv1']
 # reshaped_weights = conv1_pretrained.transpose(3, 1, 2, 0)
 model.get_layer('conv1').set_weights([conv1_pretrained])
