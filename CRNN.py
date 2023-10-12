@@ -39,23 +39,23 @@ model.add(Conv1D(64 , 3 , border_mode='valid' , activation='relu' , name='conv1'
 # the output tensor's shape is [3,1,1,64]
 # However, the pre-trained model's output tensor is [64,1,3,3]. So, I need to reshape it to [3,...]
 
-# model.add(Conv1D(32 , 3 , activation='relu' , name='conv2'))
-# model.add(MaxPooling1D(pool_length=3 , name='pool1'))
-# model.add(LSTM(40 , return_sequences=True , name='lstm'))
-# model.add(MaxPooling1D(pool_length=2 , name='pool2'))
-# num_classes = 11  # Change this based on your classification task
-# model.add(Dense(num_classes , name='dense_1'))
-# model.add(Activation('softmax' , name='activation_1'))
+model.add(Conv1D(32 , 3 , activation='relu' , name='conv2'))
+model.add(MaxPooling1D(pool_length=3 , name='pool1'))
+model.add(LSTM(40 , return_sequences=True , name='lstm'))
+model.add(MaxPooling1D(pool_length=2 , name='pool2'))
+num_classes = 11  # Change this based on your classification task
+model.add(Dense(num_classes , name='dense_1'))
+model.add(Activation('softmax' , name='activation_1'))
 model.summary()
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_mae])
 
-# model.load_weights('models/CRNN.h5')
+model.load_weights('models/CRNN.h5')
 
-# # step 1: load all the weights of the pretrained model
-pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': class_mae,'exp': K.exp})
-conv1_pretrained = pretrained_model.get_layer('conv1')
-print(conv1_pretrained.input_shape)
-# pretrained_weights = pretrained_weights_file['conv1']
-# reshaped_weights = conv1_pretrained.transpose(3, 1, 2, 0)
-model.get_layer('conv1').set_weights([conv1_pretrained])
+# # # step 1: load all the weights of the pretrained model
+# pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': class_mae,'exp': K.exp})
+# conv1_pretrained = pretrained_model.get_layer('conv1')
+# print(conv1_pretrained.input_shape)
+# # pretrained_weights = pretrained_weights_file['conv1']
+# # reshaped_weights = conv1_pretrained.transpose(3, 1, 2, 0)
+# model.get_layer('conv1').set_weights([conv1_pretrained])
