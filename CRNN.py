@@ -57,5 +57,5 @@ pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': clas
 conv1_pretrained = pretrained_model.get_layer('conv1')
 
 # pretrained_weights = pretrained_weights_file['conv1']
-reshaped_weights = conv1_pretrained.transpose(3, 1, 2, 0)
+# reshaped_weights = conv1_pretrained.transpose(3, 1, 2, 0)
 model.get_layer('conv1').set_weights([conv1_pretrained])
