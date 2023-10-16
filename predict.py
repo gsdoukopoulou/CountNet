@@ -13,10 +13,8 @@ from keras.models import Sequential
 eps = np.finfo(np.float64).eps
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
-    temp = (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
-    print(temp)
-    print("!!!!!!!!!!!!!!!")
-    return temp
+    return (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
+
 
 def count(audio, model, scaler):
     # compute STFT
