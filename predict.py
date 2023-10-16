@@ -102,10 +102,10 @@ if __name__ == '__main__':
 
     # save as svg file
     # load standardisation parameters
-    scaler = sklearn.preprocessing.StandardScaler()
-    with np.load(os.path.join("models", 'scaler.npz')) as data:
-        scaler.mean_ = data['arr_0']
-        scaler.scale_ = data['arr_1']
+    # scaler = sklearn.preprocessing.StandardScaler()
+    # with np.load(os.path.join("models", 'scaler.npz')) as data:
+    #     scaler.mean_ = data['arr_0']
+    #     scaler.scale_ = data['arr_1']
 
     # compute audio
     audio, rate = sf.read(args.audio, always_2d=True)
