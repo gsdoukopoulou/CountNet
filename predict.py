@@ -13,13 +13,9 @@ from keras.models import Sequential
 eps = np.finfo(np.float64).eps
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
-    return K.mean(
-        K.abs(
-            K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)
-        ),
-        axis=-1
-    )
-
+    temp = (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
+    print(temp)
+    return temp
 
 def count(audio, model, scaler):
     # compute STFT
@@ -46,6 +42,8 @@ def count(audio, model, scaler):
     # print(model.input_shape)
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
+
+
     return np.argmax(ys, axis=1)[0] # index of maximum value
 
 
@@ -112,5 +110,5 @@ if __name__ == '__main__':
     # downmix to mono
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler)
-    print(class_mae)
+
     print("Speaker Count Estimate: ", estimate)
