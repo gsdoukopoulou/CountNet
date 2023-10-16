@@ -10,9 +10,7 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, LSTM,
 from keras.models import Sequential
 
 
-
-eps = np.finfo(np.float64).eps # np.float64 instead of np.float
-
+eps = np.finfo(np.float64).eps
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
     return K.mean(
@@ -48,7 +46,8 @@ def count(audio, model, scaler):
     # print(model.input_shape)
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
-    return np.argmax(ys, axis=1)[0]
+    # return np.argmax(ys, axis=1)[0] # index of maximum value
+    return ys
 
 
 if __name__ == '__main__':
@@ -98,14 +97,14 @@ if __name__ == '__main__':
     model.summary()
     model.compile(optimizer='adam' , loss='categorical_crossentropy' , metrics=[class_mae])
 
-    model.load_weights('models/CRNN.h5') #, skip_mismatch = True
+    model.load_weights('models/CRNN.h5')
 
     # save as svg file
     # load standardisation parameters
-    # scaler = sklearn.preprocessing.StandardScaler()
-    # with np.load(os.path.join("models", 'scaler.npz')) as data:
-    #     scaler.mean_ = data['arr_0']
-    #     scaler.scale_ = data['arr_1']
+    scaler = sklearn.preprocessing.StandardScaler()
+    with np.load(os.path.join("models", 'scaler.npz')) as data:
+        scaler.mean_ = data['arr_0']
+        scaler.scale_ = data['arr_1']
 
     # compute audio
     audio, rate = sf.read(args.audio, always_2d=True)
