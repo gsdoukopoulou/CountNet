@@ -46,8 +46,9 @@ def count(audio, model, scaler):
     # print(model.input_shape)
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
-    # return np.argmax(ys, axis=1)[1] # index of maximum value
-    return np.argmax(ys, axis=1)
+    print(ys)
+    return np.argmax(ys, axis=1)[0] # index of maximum value
+
 
 
 if __name__ == '__main__':
