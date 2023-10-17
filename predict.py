@@ -1,5 +1,6 @@
 import numpy as np
 import soundfile as sf
+from pathlib import Path
 import argparse
 import os
 import keras
@@ -48,21 +49,21 @@ def count(audio, model, scaler):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Load keras model and predict speaker count'
-    )
-
-    parser.add_argument(
-        'audio',
-        help='audio file (samplerate 16 kHz) of 5 seconds duration'
-    )
+    # parser = argparse.ArgumentParser(
+    #     description='Load keras model and predict speaker count'
+    # )
+    #
+    # parser.add_argument(
+    #     'audio',
+    #     help='audio file (samplerate 16 kHz) of 5 seconds duration'
+    # )
 
     # parser.add_argument(
     #     '--model', default='CRNN',
     #     help='model name'
     # )
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
     # # load model
     # model = keras.models.load_model(
@@ -103,9 +104,16 @@ if __name__ == '__main__':
         scaler.mean_ = data['arr_0']
         scaler.scale_ = data['arr_1']
 
-    # compute audio
-    audio, rate = sf.read(args.audio, always_2d=True)
+    # # compute audio
+    # audio, rate = sf.read(args.audio, always_2d=True)
 
+    # read all test data and store them to a list
+    base_path = Path(r"/home/gsdoukopoul/data/test")
+    wavs = []
+    for filename in base_path.glob("*.wav"):
+        wavs.append(sf.read(filename))
+
+    audio = wavs[-1][0]
     # downmix to mono
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler)

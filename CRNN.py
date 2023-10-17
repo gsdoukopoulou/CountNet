@@ -61,7 +61,8 @@
 # model.get_layer('conv1').set_weights([conv1_pretrained])
 
 import glob
-from scipy.io.wavfile import read
+# from scipy.io.wavfile import read
+import soundfile as sf
 
 # wavs = []
 # for filename in glob.glob('*.wav'):
@@ -69,12 +70,13 @@ from scipy.io.wavfile import read
 #     wavs.append(read(filename))
 
 from pathlib import Path
-base_path = Path(r"/home/gsdoukopoul/data/test")
+# base_path = Path(r"/home/gsdoukopoul/data/test")
+base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\test")
 
 wavs = []
 for filename in base_path.glob("*.wav"):
-    wavs.append(read(filename))
+    wavs.append(sf.read(filename))
 
-
-# print(len(wavs[5719][1]))
+audio = wavs[-1][0]
+print((audio))
     # do something, e.g. with open(wav_file_path) as wav_file:
