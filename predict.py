@@ -40,7 +40,7 @@ def count(audio, model, scaler, y_true):
         X = X[:, np.newaxis, ...]
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
-    print(ys)
+    ys = tf.convert_to_tensor(ys)
     class_mae_result = class_mae(y_true , ys)
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
