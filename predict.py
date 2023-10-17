@@ -118,7 +118,7 @@ if __name__ == '__main__':
         wavs.append(sf.read(filename, always_2d=True))
 
     audio = wavs[-1][0]
-    y_true = tf.convert_to_tensor(np.ones(80000) * 10)
+    y_true = tf.convert_to_tensor(np.ones(11) * 10)
     # downmix to mono
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler, y_true)
