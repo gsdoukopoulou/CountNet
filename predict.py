@@ -15,8 +15,7 @@ eps = np.finfo(np.float64).eps
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
     temp=(K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
-    print(y_pred)
-    print("!!!!!!!!!!!!")
+    print(y_pred[-1])
     return temp
 
 def count(audio, model, scaler):
@@ -115,7 +114,6 @@ if __name__ == '__main__':
 
     audio = wavs[-1][0]
     # downmix to mono
-    print(audio.shape)
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler)
 
