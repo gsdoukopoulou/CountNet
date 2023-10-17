@@ -74,9 +74,9 @@ from pathlib import Path
 base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\test")
 
 wavs = []
-for filename in base_path.glob("*.wav"):
+for filename in base_path.glob("10_*.wav"):
     wavs.append(sf.read(filename))
 
 audio = wavs[-1][0]
-print((audio.shape))
+print(len(wavs))
     # do something, e.g. with open(wav_file_path) as wav_file:

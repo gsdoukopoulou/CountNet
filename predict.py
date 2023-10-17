@@ -109,7 +109,7 @@ if __name__ == '__main__':
     # read all test data and store them to a list
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
-    for filename in base_path.glob("*.wav"):
+    for filename in base_path.glob("10_*.wav"):
         wavs.append(sf.read(filename, always_2d=True))
 
     audio = wavs[-1][0]
