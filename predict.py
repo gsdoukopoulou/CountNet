@@ -14,11 +14,10 @@ from keras.models import Sequential
 eps = np.finfo(np.float64).eps
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
-    temp=(K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
-    print(y_pred[-1])
-    return temp
+    return (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
 
-def count(audio, model, scaler):
+
+def count(audio, model, scaler, y_true):
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
     X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
@@ -40,6 +39,7 @@ def count(audio, model, scaler):
         X = X[:, np.newaxis, ...]
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
+    class_mae_result = class_mae(y_true , np.argmax(ys , axis=-1))
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
@@ -113,8 +113,9 @@ if __name__ == '__main__':
         wavs.append(sf.read(filename, always_2d=True))
 
     audio = wavs[-1][0]
+    y_true = 10
     # downmix to mono
     audio = np.mean(audio, axis=1)
-    estimate = count(audio, model, scaler)
+    estimate = count(audio, model, scaler, y_true)
 
     print("Speaker Count Estimate: ", estimate)
