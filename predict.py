@@ -111,7 +111,7 @@ if __name__ == '__main__':
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
     for filename in base_path.glob("*.wav"):
-        wavs.append(sf.read(filename))
+        wavs.append(sf.read(filename, always_2d=True))
 
     audio = wavs[-1][0]
     # downmix to mono
