@@ -63,6 +63,7 @@
 import glob
 # from scipy.io.wavfile import read
 import soundfile as sf
+import numpy as np
 
 # wavs = []
 # for filename in glob.glob('*.wav'):
@@ -80,3 +81,7 @@ for filename in base_path.glob("10_*.wav"):
 audio = wavs[-1][0]
 print(len(wavs))
     # do something, e.g. with open(wav_file_path) as wav_file:
+
+y_true = np.ones(80000) * 10
+
+print(y_true)
