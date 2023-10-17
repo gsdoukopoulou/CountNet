@@ -115,6 +115,7 @@ if __name__ == '__main__':
 
     audio = wavs[-1][0]
     # downmix to mono
+    print(audio.shape)
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler)
 

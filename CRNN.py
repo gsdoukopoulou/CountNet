@@ -78,5 +78,5 @@ for filename in base_path.glob("*.wav"):
     wavs.append(sf.read(filename))
 
 audio = wavs[-1][0]
-print((audio))
+print((audio.shape))
     # do something, e.g. with open(wav_file_path) as wav_file:
