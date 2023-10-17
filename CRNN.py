@@ -69,7 +69,7 @@ from scipy.io.wavfile import read
 #     wavs.append(read(filename))
 
 from pathlib import Path
-base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\LibriCount10-0dB.zip\test")
+base_path = Path(r"/home/gsdoukopoul/data/test")
 
 wavs = []
 for filename in base_path.glob("*.wav"):
