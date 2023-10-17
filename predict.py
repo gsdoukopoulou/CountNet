@@ -39,7 +39,8 @@ def count(audio, model, scaler, y_true):
         X = X[:, np.newaxis, ...]
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
-    class_mae_result = class_mae(y_true , np.argmax(ys , axis=-1))
+    class_mae_result = class_mae(y_true , ys)
+
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
