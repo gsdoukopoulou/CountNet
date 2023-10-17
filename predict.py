@@ -16,6 +16,7 @@ eps = np.finfo(np.float64).eps
 def class_mae(y_true, y_pred): # calculate mean absolute error
     temp=(K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
     print(y_pred)
+    print("!!!!!!!!!!!!")
     return temp
 
 def count(audio, model, scaler):
@@ -40,7 +41,10 @@ def count(audio, model, scaler):
         X = X[:, np.newaxis, ...]
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
-    print(ys)
+    # ys is a vector with length 11 (for k = [0,...,10]) and to each class
+    # a probability is assigned. Argmax yields the index of the highest
+    # value in this vector. Meaning that the index of the highest
+    # likely value is the number of speakers
     return np.argmax(ys, axis=1)[0] # index of maximum value
 
 
