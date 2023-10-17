@@ -114,7 +114,7 @@ if __name__ == '__main__':
         wavs.append(sf.read(filename, always_2d=True))
 
     audio = wavs[-1][0]
-    y_true = K.constant(np.ones(80000) * 10, dtype=K.floatx())
+    y_true = K.constant(np.ones(80000) * 10)
     # downmix to mono
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler, y_true)
