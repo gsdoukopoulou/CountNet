@@ -15,7 +15,7 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
 
 model = Sequential()
 model.add(Conv1D(201 , 3 , border_mode='same' , input_shape=(500, 1) , name='encoder'))  # input_shape=(1 , 80000),
-model.add(Reshape((1 , 500 , 64) , name='reshape_layer'))
+model.add(Reshape((1 , 500 , 201) , name='reshape_layer'))
 
 model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default', name='zero1')) #, input_shape=(1, 500, 201)
 model.add(Conv2D(64, 3, 3, border_mode='valid', activation='relu', name='conv1', dim_ordering='th'))
