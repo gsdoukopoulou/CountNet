@@ -40,11 +40,13 @@ def count(audio, model, scaler, y_true):
         X = X[:, np.newaxis, ...]
 
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
+
     y_pred = tf.convert_to_tensor(ys)
-    class_mae_result = class_mae(y_true , y_pred)
+    class_mae_result = class_mae(y_true, y_pred)
     with tf.Session() as sess:
-        result = sess.run(class_mae_result)
-        print(result)
+        print(sess.run(class_mae_result))
+        print(y_pred)
+
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
