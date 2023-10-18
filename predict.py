@@ -18,7 +18,7 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
     return (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
 
 
-def count(audio, model, scaler):
+def count(audio, model, scaler, y_true):
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
     X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
@@ -110,19 +110,21 @@ if __name__ == '__main__':
 
 
     ################################################
-    # # read all test data and store them to a list
-    # base_path = Path(r"/home/gsdoukopoul/data/test")
-    # wavs = []
-    # for filename in base_path.glob("10_*.wav"):
-    #     wavs.append(sf.read(filename, always_2d=True))
-    #
-    # audio = wavs[-1][0]
-    #
-    # y_true = tf.convert_to_tensor(np.ones(11) * 10)
-    # audio = np.mean(audio, axis=1)
-    # estimate = count(audio, model, scaler, y_true)
-    #
-    # print("Speaker Count Estimate: ", estimate)
+    # read all test data and store them to a list
+    base_path = Path(r"/home/gsdoukopoul/data/test")
+    wavs = []
+    for filename in base_path.glob("10_*.wav"):
+        wavs.append(sf.read(filename, always_2d=True))
+
+    audio = wavs[-1][0]
+
+    y_true = np.zeros(11) * 10
+    y_true[-1] = 10
+    y_true = tf.convert_to_tensor(y_true)
+    audio = np.mean(audio, axis=1)
+    estimate = count(audio, model, scaler, y_true)
+
+    print("Speaker Count Estimate: ", estimate)
     ################################################
 
 
