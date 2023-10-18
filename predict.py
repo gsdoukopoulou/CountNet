@@ -42,6 +42,7 @@ def count(audio, model, scaler):
     X = audio
     X = X[:500]
     X = X[..., np.newaxis]
+    X = X[... , np.newaxis]
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
