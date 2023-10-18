@@ -120,7 +120,8 @@ if __name__ == '__main__':
     for filename in base_path.glob("*.wav"):
         wavs.append(sf.read(filename, always_2d=True))
 
-        audio = wavs
+        audio = wavs[0]
+        audio = audio[0]
         name = os.path.basename(filename)
         name = name[:2]
 
