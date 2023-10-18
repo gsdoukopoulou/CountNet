@@ -76,7 +76,7 @@ base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\test")
 
 wavs = []
 y_true = np.zeros(11)
-for filename in base_path.glob("6_*.wav"):
+for filename in base_path.glob("9_*.wav"):
     wavs.append(sf.read(filename))
     name = os.path.basename(filename)
     name = name[:2]

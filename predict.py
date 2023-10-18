@@ -116,28 +116,30 @@ if __name__ == '__main__':
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
     y_true = np.zeros(11)
-    for filename in base_path.glob("10_*.wav"):
+    final_mae = []
+    for filename in base_path.glob("*.wav"):
         wavs.append(sf.read(filename, always_2d=True))
 
-        # audio = wavs
-        # name = os.path.basename(filename)
-        # name = name[:2]
+        audio = wavs
+        name = os.path.basename(filename)
+        name = name[:2]
+
+        if any(c == '_' for c in name):
+            y_true[int(name[:1])] = 1
+        else:
+            y_true[-1] = 1
+
+        # audio = wavs[-1][0]
         #
-        # if any(c == '_' for c in name):
-        #     y_true[int(name[:1])] = 1
-        # else:
-        #     y_true[-1] = 1
+        # y_true = np.zeros(11)
+        # y_true[-1] = 10
 
-    audio = wavs[-1][0]
+        y_true = tf.convert_to_tensor(y_true)
+        audio = np.mean(audio, axis=1)
+        estimate, result_mae = count(audio, model, scaler, y_true)
+        final_mae.append(result_mae)
 
-    y_true = np.zeros(11)
-    y_true[-1] = 10
-
-    y_true = tf.convert_to_tensor(y_true)
-    audio = np.mean(audio, axis=1)
-    estimate, result_mae = count(audio, model, scaler, y_true)
-
-    print("MAE: " , result_mae)
+    print("MAE: " , np.mean(result_mae))
     print("Speaker Count Estimate: ", estimate)
     ################################################
 
