@@ -58,30 +58,16 @@ def count(audio, model, scaler, y_true):
 
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser(
-    #     description='Load keras model and predict speaker count'
-    # )
-    #
-    # parser.add_argument(
-    #     'audio',
-    #     help='audio file (samplerate 16 kHz) of 5 seconds duration'
-    # )
+    parser = argparse.ArgumentParser(
+        description='Load keras model and predict speaker count'
+    )
 
-    # parser.add_argument(
-    #     '--model', default='CRNN',
-    #     help='model name'
-    # )
+    parser.add_argument(
+        'audio',
+        help='audio file (samplerate 16 kHz) of 5 seconds duration'
+    )
 
-    # args = parser.parse_args()
-
-    # # load model
-    # model = keras.models.load_model(
-    #     os.path.join('models', args.model + '.h5'),
-    #     custom_objects={
-    #         'class_mae': class_mae,
-    #         'exp': K.exp
-    #     }
-    # )
+    args = parser.parse_args()
 
     model = Sequential()
     # the model for the spectrogram input
@@ -113,19 +99,30 @@ if __name__ == '__main__':
         scaler.mean_ = data['arr_0']
         scaler.scale_ = data['arr_1']
 
-    # # compute audio
-    # audio, rate = sf.read(args.audio, always_2d=True)
+    # compute audio
+    audio, rate = sf.read(args.audio, always_2d=True)
 
-    # read all test data and store them to a list
-    base_path = Path(r"/home/gsdoukopoul/data/test")
-    wavs = []
-    for filename in base_path.glob("10_*.wav"):
-        wavs.append(sf.read(filename, always_2d=True))
-
-    audio = wavs[-1][0]
-    y_true = tf.convert_to_tensor(np.ones(11) * 10)
     # downmix to mono
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler, y_true)
 
     print("Speaker Count Estimate: ", estimate)
+
+
+    ################################################
+    # # read all test data and store them to a list
+    # base_path = Path(r"/home/gsdoukopoul/data/test")
+    # wavs = []
+    # for filename in base_path.glob("10_*.wav"):
+    #     wavs.append(sf.read(filename, always_2d=True))
+    #
+    # audio = wavs[-1][0]
+    #
+    # y_true = tf.convert_to_tensor(np.ones(11) * 10)
+    # audio = np.mean(audio, axis=1)
+    # estimate = count(audio, model, scaler, y_true)
+    #
+    # print("Speaker Count Estimate: ", estimate)
+    ################################################
+
+
