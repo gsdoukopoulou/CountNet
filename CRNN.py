@@ -1,7 +1,7 @@
-# import os
+import os
 # import keras
 # import h5py
-from keras import backend as K
+# from keras import backend as K
 # from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, LSTM, Permute, Reshape, Dropout, MaxPooling1D, ZeroPadding2D, ZeroPadding1D, Conv1D
 # from keras.models import Sequential, load_model
 #
@@ -75,13 +75,18 @@ from pathlib import Path
 base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\test")
 
 wavs = []
-for filename in base_path.glob("10_*.wav"):
+y_true = np.zeros(11)
+for filename in base_path.glob("6_*.wav"):
     wavs.append(sf.read(filename))
+    name = os.path.basename(filename)
+    name = name[:2]
+
+    if any(c == '_' for c in name):
+        y_true[int(name[:1])] = 1
+    else:
+        y_true[-1] = 1
+
 
 audio = wavs[-1][0]
-print(len(wavs))
-    # do something, e.g. with open(wav_file_path) as wav_file:
-
-y_true = np.ones(80000) * 10
-
 print(y_true)
+

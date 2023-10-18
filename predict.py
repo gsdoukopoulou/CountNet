@@ -46,10 +46,11 @@ def count(audio, model, scaler, y_true):
     class_mae_result = class_mae(y_true, y_pred)
 
     with tf.Session() as sess:
-        print(sess.run(class_mae_result))
+        temp_mae = sess.run(class_mae_result)
         # print(sess.run(y_pred))
         # print(sess.run(K.argmax(y_pred, axis=-1)))
 
+    print(temp_mae)
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
@@ -114,16 +115,28 @@ if __name__ == '__main__':
     # my code
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
+    y_true = np.zeros(11)
     for filename in base_path.glob("10_*.wav"):
         wavs.append(sf.read(filename, always_2d=True))
 
+        # audio = wavs
+        # name = os.path.basename(filename)
+        # name = name[:2]
+        #
+        # if any(c == '_' for c in name):
+        #     y_true[int(name[:1])] = 1
+        # else:
+        #     y_true[-1] = 1
+
     audio = wavs[-1][0]
 
-    y_true = np.zeros(11) * 10
+    y_true = np.zeros(11)
     y_true[-1] = 10
+
     y_true = tf.convert_to_tensor(y_true)
     audio = np.mean(audio, axis=1)
     estimate = count(audio, model, scaler, y_true)
+
 
     print("Speaker Count Estimate: ", estimate)
     ################################################
