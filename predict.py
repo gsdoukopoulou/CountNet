@@ -50,12 +50,12 @@ def count(audio, model, scaler, y_true):
         # print(sess.run(y_pred))
         # print(sess.run(K.argmax(y_pred, axis=-1)))
 
-    print(temp_mae)
+
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
     # likely value is the number of speakers
-    return np.argmax(ys, axis=1)[0] # index of maximum value
+    return np.argmax(ys, axis=1)[0], temp_mae # index of maximum value
 
 
 if __name__ == '__main__':
@@ -135,9 +135,9 @@ if __name__ == '__main__':
 
     y_true = tf.convert_to_tensor(y_true)
     audio = np.mean(audio, axis=1)
-    estimate = count(audio, model, scaler, y_true)
+    estimate, result_mae = count(audio, model, scaler, y_true)
 
-
+    print("MAE: " , result_mae)
     print("Speaker Count Estimate: ", estimate)
     ################################################
 
