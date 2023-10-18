@@ -99,14 +99,14 @@ if __name__ == '__main__':
         scaler.mean_ = data['arr_0']
         scaler.scale_ = data['arr_1']
 
-    # compute audio
-    audio, rate = sf.read(args.audio, always_2d=True)
-
-    # downmix to mono
-    audio = np.mean(audio, axis=1)
-    estimate = count(audio, model, scaler)
-
-    print("Speaker Count Estimate: ", estimate)
+    # # compute audio
+    # audio, rate = sf.read(args.audio, always_2d=True)
+    #
+    # # downmix to mono
+    # audio = np.mean(audio, axis=1)
+    # estimate = count(audio, model, scaler)
+    #
+    # print("Speaker Count Estimate: ", estimate)
 
 
     ################################################
