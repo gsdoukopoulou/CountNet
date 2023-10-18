@@ -17,7 +17,7 @@ model = Sequential()
 model.add(Conv1D(64 , 3 , border_mode='same' , input_shape=(500, 1) , name='encoder'))  # input_shape=(1 , 80000),
 model.add(Reshape((1 , 500 , 64) , name='reshape_layer'))
 model.add(ZeroPadding2D(padding=(0, 0), dim_ordering='default', name='zero1')) #, input_shape=(1, 500, 201)
-# model.add(Conv2D(64, 3, 3, border_mode='valid', activation='relu', name='conv1', dim_ordering='th'))
+model.add(Conv2D(64, 3, 3, border_mode='valid', activation='relu', name='conv1', dim_ordering='th'))
 # model.add(Conv2D(32, 3, 3, border_mode='valid', activation='relu', name='conv2', dim_ordering='th'))
 # model.add(MaxPooling2D(pool_size=(3, 3), border_mode='valid', name='pool1', dim_ordering='th'))
 # model.add(Dropout(0.5, name='dropout_1'))
