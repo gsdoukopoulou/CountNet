@@ -58,16 +58,16 @@ def count(audio, model, scaler, y_true):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Load keras model and predict speaker count'
-    )
-
-    parser.add_argument(
-        'audio',
-        help='audio file (samplerate 16 kHz) of 5 seconds duration'
-    )
-
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(
+    #     description='Load keras model and predict speaker count'
+    # )
+    #
+    # parser.add_argument(
+    #     'audio',
+    #     help='audio file (samplerate 16 kHz) of 5 seconds duration'
+    # )
+    #
+    # args = parser.parse_args()
 
     model = Sequential()
     # the model for the spectrogram input
