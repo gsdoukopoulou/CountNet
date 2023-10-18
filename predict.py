@@ -111,6 +111,7 @@ if __name__ == '__main__':
 
     ################################################
     # read all test data and store them to a list
+    # my code
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
     for filename in base_path.glob("10_*.wav"):
