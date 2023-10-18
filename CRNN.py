@@ -5,13 +5,13 @@ from keras import backend as K
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, LSTM, Permute, Reshape, Dropout, MaxPooling1D, ZeroPadding2D, ZeroPadding1D, Conv1D
 from keras.models import Sequential, load_model
 
-# def class_mae(y_true, y_pred): # calculate mean absolute error
-#     return K.mean(
-#         K.abs(
-#             K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)
-#         ),
-#         axis=-1
-#     )
+def class_mae(y_true, y_pred): # calculate mean absolute error
+    return K.mean(
+        K.abs(
+            K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)
+        ),
+        axis=-1
+    )
 
 model = Sequential()
 model.add(Conv1D(64 , 3 , border_mode='same' , input_shape=(500, 1) , name='encoder'))  # input_shape=(1 , 80000),
