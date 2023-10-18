@@ -21,24 +21,26 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
 def count(audio, model, scaler):
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
-    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
+    # X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
+    #
+    # # apply global (featurewise) standardization to mean1, var0
+    # X = scaler.transform(X)
+    #
+    # # cut to input shape length (500 frames x 201 STFT bins)
+    # X = X[:500, :]
+    #
+    # # apply l2 normalization
+    # Theta = np.linalg.norm(X, axis=1) + eps
+    # X /= np.mean(Theta)
+    #
+    # # add sample dimension
+    # X = X[np.newaxis, ...]
+    #
+    # if len(model.input_shape) == 4:
+    #     X = X[:, np.newaxis, ...]
 
-    # apply global (featurewise) standardization to mean1, var0
-    X = scaler.transform(X)
-
-    # cut to input shape length (500 frames x 201 STFT bins)
-    X = X[:500, :]
-
-    # apply l2 normalization
-    Theta = np.linalg.norm(X, axis=1) + eps
-    X /= np.mean(Theta)
-
-    # add sample dimension
-    X = X[np.newaxis, ...]
-
-    if len(model.input_shape) == 4:
-        X = X[:, np.newaxis, ...]
-
+    X = audio
+    X = X[np.newaxis , ...]
     ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
@@ -61,8 +63,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     model = Sequential()
+    # encoder
+    model.add(Conv1D(64, 3, border_mode='same', input_shape=(1 , 80000), name='encoder'))
     # the model for the spectrogram input
-    model.add(ZeroPadding2D(padding=(0 , 0) , dim_ordering='default' , input_shape=(1 , 500 , 201) , name='zero1'))
+    model.add(ZeroPadding2D(padding=(0 , 0) , dim_ordering='default' , name='zero1')) #input_shape=(1 , 500 , 201) ,
     model.add(Conv2D(64 , 3 , 3 , border_mode='valid' , activation='relu' , name='conv1' , dim_ordering='th'))
     model.add(Conv2D(32 , 3 , 3 , border_mode='valid' , activation='relu' , name='conv2' , dim_ordering='th'))
     model.add(MaxPooling2D(pool_size=(3 , 3) , border_mode='valid' , name='pool1' , dim_ordering='th'))
