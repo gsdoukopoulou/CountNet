@@ -115,7 +115,7 @@ if __name__ == '__main__':
     # my code
     base_path = Path(r"/home/gsdoukopoul/data/test")
     wavs = []
-    y_true = np.zeros(11)
+    label = np.zeros(11)
     final_mae = []
     for filename in base_path.glob("*.wav"):
         wavs.append(sf.read(filename, always_2d=True))
@@ -126,16 +126,16 @@ if __name__ == '__main__':
         name = name[:2]
 
         if any(c == '_' for c in name):
-            y_true[int(name[:1])] = 1
+            label[int(name[:1])] = 1
         else:
-            y_true[-1] = 1
+            label[-1] = 1
 
         # audio = wavs[-1][0]
         #
         # y_true = np.zeros(11)
         # y_true[-1] = 10
 
-        y_true = tf.convert_to_tensor(y_true)
+        y_true = tf.convert_to_tensor(label)
         audio = np.mean(audio, axis=1)
         estimate, result_mae = count(audio, model, scaler, y_true)
         final_mae.append(result_mae)
