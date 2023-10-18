@@ -64,8 +64,9 @@ if __name__ == '__main__':
 
     model = Sequential()
     # encoder
-    model.add(Conv1D(64, 3, border_mode='same', input_shape=(1 , 80000), name='encoder'))
-    model.add(Reshape((1 , 500 , 64) , name='reshape_layer'))
+    model.add(MaxPooling1D(pool_length=500, stride=None, input_shape=(1 , 80000), border_mode='valid'))
+    model.add(Conv1D(64, 3, border_mode='same',name='encoder')) # input_shape=(1 , 80000),
+    # model.add(Reshape((1 , 500 , 64) , name='reshape_layer'))
     # # the model for the spectrogram input
     model.add(ZeroPadding2D(padding=(0 , 0) , dim_ordering='default' , name='zero1')) #input_shape=(1 , 500 , 201) ,
     # model.add(Conv2D(64 , 3 , 3 , border_mode='valid' , activation='relu' , name='conv1' , dim_ordering='th'))
