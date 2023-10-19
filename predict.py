@@ -109,12 +109,12 @@ if __name__ == '__main__':
     #
     # print("Speaker Count Estimate: ", estimate)
     ################################################
-    base_path = Path(r"/home/gsdoukopoul/data/test")
+    # base_path = Path(r"/home/gsdoukopoul/data/test")
 
     label = np.zeros(11)
     final_mae = []
 
-    audio, sr = sf.read("10_0cefd5.wav" , always_2d=True)
+    audio, sr = sf.read(r"/home/gsdoukopoul/data/test/10_0cefd5.wav" , always_2d=True)
     label = np.zeros(11)
     label[-1] = 1
 
