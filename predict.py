@@ -114,7 +114,7 @@ if __name__ == '__main__':
     label = np.zeros(11)
     final_mae = []
 
-    audio, sr = sf.read(r"/home/gsdoukopoul/data/test/10_0cefd5.wav" , always_2d=True)
+    audio, sr = sf.read(r"/home/gsdoukopoul/data/test/5_429062.wav" , always_2d=True)
     label = np.zeros(11)
     label[-1] = 1
 
