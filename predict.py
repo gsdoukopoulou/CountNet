@@ -18,7 +18,7 @@ def class_mae(y_true, y_pred): # calculate mean absolute error
     return (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
 
 
-def count(audio, model, scaler): #, y_true
+def count(audio, model, scaler, y_true): #, y_true
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
     X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
@@ -43,32 +43,32 @@ def count(audio, model, scaler): #, y_true
 
     # trying to recreate the mae results
     y_pred = tf.convert_to_tensor(ys)
-    # class_mae_result = class_mae(y_true, y_pred)
+    class_mae_result = class_mae(y_true, y_pred)
 
-    # with tf.Session() as sess:
-    #     temp_mae = sess.run(class_mae_result)
-    #     # print(sess.run(y_pred))
-    #     # print(sess.run(K.argmax(y_pred, axis=-1)))
+    with tf.Session() as sess:
+        temp_mae = sess.run(class_mae_result)
+        # print(sess.run(y_pred))
+        # print(sess.run(K.argmax(y_pred, axis=-1)))
 
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
     # likely value is the number of speakers
-    return np.argmax(ys, axis=1)[0] # index of maximum value ##temp_mae
+    return np.argmax(ys, axis=1)[0], temp_mae # index of maximum value ##temp_mae
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Load keras model and predict speaker count'
-    )
-
-    parser.add_argument(
-        'audio',
-        help='audio file (samplerate 16 kHz) of 5 seconds duration'
-    )
-
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(
+    #     description='Load keras model and predict speaker count'
+    # )
+    #
+    # parser.add_argument(
+    #     'audio',
+    #     help='audio file (samplerate 16 kHz) of 5 seconds duration'
+    # )
+    #
+    # args = parser.parse_args()
 
     model = Sequential()
     # the model for the spectrogram input
@@ -100,48 +100,48 @@ if __name__ == '__main__':
         scaler.mean_ = data['arr_0']
         scaler.scale_ = data['arr_1']
 
-    # compute audio
-    audio, rate = sf.read(args.audio, always_2d=True)
-
-    # downmix to mono
-    audio = np.mean(audio, axis=1)
-    estimate = count(audio, model, scaler)
-
-    print("Speaker Count Estimate: ", estimate)
+    # # compute audio
+    # audio, rate = sf.read(args.audio, always_2d=True)
+    #
+    # # downmix to mono
+    # audio = np.mean(audio, axis=1)
+    # estimate = count(audio, model, scaler)
+    #
+    # print("Speaker Count Estimate: ", estimate)
 
 
     ################################################
-    # # read all test data and store them to a list
-    # # my code
-    # base_path = Path(r"/home/gsdoukopoul/data/test")
-    # wavs = []
-    # label = np.zeros(11)
-    # final_mae = []
-    # for filename in base_path.glob("*.wav"):
-    #     wavs.append(sf.read(filename, always_2d=True))
-    #
-    #     audio = wavs[0]
-    #     audio = audio[0]
-    #     name = os.path.basename(filename)
-    #     name = name[:2]
-    #
-    #     if any(c == '_' for c in name):
-    #         label[int(name[:1])] = 1
-    #     else:
-    #         label[-1] = 1
-    #
-    #     # audio = wavs[-1][0]
-    #     #
-    #     # y_true = np.zeros(11)
-    #     # y_true[-1] = 10
-    #
-    #     y_true = tf.convert_to_tensor(label)
-    #     audio = np.mean(audio, axis=1)
-    #     estimate, result_mae = count(audio, model, scaler, y_true)
-    #     final_mae.append(result_mae)
-    #
-    # print("MAE: " , np.mean(result_mae))
-    # print("Speaker Count Estimate: ", estimate)
+    # read all test data and store them to a list
+    # my code
+    base_path = Path(r"/home/gsdoukopoul/data/test")
+    wavs = []
+    label = np.zeros(11)
+    final_mae = []
+    for filename in base_path.glob("*.wav"):
+        wavs.append(sf.read(filename, always_2d=True))
+
+        audio = wavs[0]
+        audio = audio[0]
+        name = os.path.basename(filename)
+        name = name[:2]
+
+        if any(c == '_' for c in name):
+            label[int(name[:1])] = 1
+        else:
+            label[-1] = 1
+
+        # audio = wavs[-1][0]
+        #
+        # y_true = np.zeros(11)
+        # y_true[-1] = 10
+
+        y_true = tf.convert_to_tensor(label)
+        audio = np.mean(audio, axis=1)
+        estimate, result_mae = count(audio, model, scaler, y_true)
+        final_mae.append(result_mae)
+
+    print("MAE: " , np.mean(result_mae))
+    print("Speaker Count Estimate: ", estimate)
     ################################################
 
 
