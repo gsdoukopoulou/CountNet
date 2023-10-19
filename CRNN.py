@@ -76,7 +76,7 @@ base_path = Path(r"D:\Documents\CNS\internship\CountNet\CountNet\test")
 
 wavs = []
 y_true = np.zeros(11)
-wavs=sf.read(r"D:\Documents\CNS\internship\CountNet\CountNet\test\10_0cefd5.wav")
+wavs, sr=sf.read(r"D:\Documents\CNS\internship\CountNet\CountNet\test\10_0cefd5.wav")
 
 # for filename in base_path.glob("9_*.wav"):
 #     wavs.append(sf.read(filename))
