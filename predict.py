@@ -108,40 +108,55 @@ if __name__ == '__main__':
     # estimate = count(audio, model, scaler)
     #
     # print("Speaker Count Estimate: ", estimate)
-
-
     ################################################
-    # read all test data and store them to a list
-    # my code
     base_path = Path(r"/home/gsdoukopoul/data/test")
-    wavs = []
+
     label = np.zeros(11)
     final_mae = []
-    for filename in base_path.glob("*.wav"):
-        wavs.append(sf.read(filename, always_2d=True))
 
-        audio = wavs[0]
-        audio = audio[0]
-        name = os.path.basename(filename)
-        name = name[:2]
+    audio, sr = sf.read("10_0cefd5.wav" , always_2d=True)
+    label = np.zeros(11)
+    label[-1] = 1
 
-        if any(c == '_' for c in name):
-            label[int(name[:1])] = 1
-        else:
-            label[-1] = 1
+    y_true = tf.convert_to_tensor(label)
+    audio = np.mean(audio, axis=1)
+    estimate, result_mae = count(audio, model, scaler, y_true)
 
-        # audio = wavs[-1][0]
-        #
-        # y_true = np.zeros(11)
-        # y_true[-1] = 10
-
-        y_true = tf.convert_to_tensor(label)
-        audio = np.mean(audio, axis=1)
-        estimate, result_mae = count(audio, model, scaler, y_true)
-        final_mae.append(result_mae)
-
-    print("MAE: " , np.mean(result_mae))
+    print("MAE: " , result_mae)
     print("Speaker Count Estimate: ", estimate)
+    ################################################
+    # # read all test data and store them to a list
+    # # my code
+    # base_path = Path(r"/home/gsdoukopoul/data/test")
+    # wavs = []
+    # label = np.zeros(11)
+    # final_mae = []
+    #
+    # for filename in base_path.glob("*.wav"):
+    #     wavs.append(sf.read(filename, always_2d=True))
+    #
+    #     audio = wavs[0]
+    #     audio = audio[0]
+    #     name = os.path.basename(filename)
+    #     name = name[:2]
+    #
+    #     if any(c == '_' for c in name):
+    #         label[int(name[:1])] = 1
+    #     else:
+    #         label[-1] = 1
+    #
+    #     # audio = wavs[-1][0]
+    #     #
+    #     # y_true = np.zeros(11)
+    #     # y_true[-1] = 10
+    #
+    #     y_true = tf.convert_to_tensor(label)
+    #     audio = np.mean(audio, axis=1)
+    #     estimate, result_mae = count(audio, model, scaler, y_true)
+    #     final_mae.append(result_mae)
+    #
+    # print("MAE: " , np.mean(result_mae))
+    # print("Speaker Count Estimate: ", estimate)
     ################################################
 
 
