@@ -53,9 +53,9 @@ model.summary()
 # model.summary()
 
 # #
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_mae])
-#
-model.load_weights('models/CRNN.h5', by_name = True)
+# model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=[class_mae])
+# #
+# model.load_weights('models/CRNN.h5', by_name = True)
 #
 # # # # step 1: load all the weights of the pretrained model
 # pretrained_model = load_model('models/CRNN.h5',custom_objects={'class_mae': class_mae,'exp': K.exp})

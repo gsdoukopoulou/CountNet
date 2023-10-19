@@ -40,6 +40,7 @@ def count(audio, model, scaler):
     #     X = X[:, np.newaxis, ...]
 
     X = audio
+
     X = X[:500]
     X = X[..., np.newaxis]
     X = X[np.newaxis, ...]
