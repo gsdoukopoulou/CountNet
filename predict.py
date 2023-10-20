@@ -47,7 +47,7 @@ def count(audio, model, scaler, y_true): #, y_true
     y_pred = np.zeros(11)
     y_pred[np.argmax(ys, axis=-1)] = 1
 
-    # y_pred = tf.convert_to_tensor(ys)
+    y_pred = tf.convert_to_tensor(ys)
     # class_mae_result = class_mae(y_true, y_pred)
 
     # with tf.Session() as sess:
@@ -56,10 +56,9 @@ def count(audio, model, scaler, y_true): #, y_true
     #     # print(sess.run(K.argmax(y_pred, axis=-1)))
 
     ############################################
-    m = tf.keras.metrics.MeanAbsoluteError()
-    m.update_state(y_pred, y_true)
+    m = tf.metrics.mean_absolute_error(y_true, y_pred)
     with tf.Session() as sess:
-        temp_mae = sess.run(m.result())
+        temp_mae = sess.run(m)
     # print('Final result: ' , m.result().numpy())
     ############################################
 
@@ -139,7 +138,7 @@ if __name__ == '__main__':
             label[-1] = 1
 
         y_true = label
-        # y_true = tf.convert_to_tensor(label)
+        y_true = tf.convert_to_tensor(label)
         audio = np.mean(audio, axis=1)
         estimate, result_mae = count(audio, model, scaler, y_true)
         final_mae.append(result_mae)
