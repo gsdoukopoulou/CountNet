@@ -43,25 +43,24 @@ def count(audio, model, scaler, y_true): #, y_true
     ys = model.predict(X, verbose=0)  # as it is X is (1, 1, 500, 201)
 
     # trying to recreate the mae results
-    print(ys)
+
     y_pred = np.zeros(11)
     y_pred[np.argmax(ys, axis=-1)] = 1
 
-    y_pred = tf.convert_to_tensor(ys)
-    class_mae_result = class_mae(y_true, y_pred)
-
-    with tf.Session() as sess:
-        temp_mae = sess.run(class_mae_result)
+    y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
+    # class_mae_result = class_mae(y_true, y_pred)
+    #
+    # with tf.Session() as sess:
+    #     temp_mae = sess.run(class_mae_result)
         # print(sess.run(y_pred))
         # print(sess.run(K.argmax(y_pred, axis=-1)))
 
     ############################################
     print("y_pred:", y_pred)
     print("y_true:", y_true)
-    # m = tf.metrics.mean_absolute_error(y_true, y_pred)
-    # with tf.Session() as sess:
-    #     temp_mae = sess.run(m)
-    # print('Final result: ' , m.result().numpy())
+    m = tf.metrics.mean_absolute_error(y_true, y_pred)
+    with tf.Session() as sess:
+        temp_mae = sess.run(m)
     ############################################
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
