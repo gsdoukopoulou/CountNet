@@ -46,8 +46,8 @@ def count(audio, model, scaler, y_true): #, y_true
 
     # y_pred = np.zeros(11)
     # y_pred[np.argmax(ys, axis=-1)] = 1
-    # y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
-    class_mae_result = class_mae(y_true, ys)
+    y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
+    class_mae_result = class_mae(y_pred, ys)
 
     with tf.Session() as sess:
         temp_mae = sess.run(class_mae_result)
