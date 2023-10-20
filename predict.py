@@ -61,7 +61,7 @@ def count(audio, model, scaler, y_true): #, y_true
     y_true = tf.cast(y_true , tf.float32)
     mae = np.mean(np.abs(y_true - y_pred))
     with tf.Session() as sess:
-        temp_mae = sess.run(m)
+        temp_mae = sess.run(mae)
     ############################################
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
