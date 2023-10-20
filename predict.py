@@ -58,7 +58,8 @@ def count(audio, model, scaler, y_true): #, y_true
     ############################################
     m = tf.keras.metrics.MeanAbsoluteError()
     m.update_state(y_pred, y_true)
-    temp_mae = m.result().numpy()
+    with tf.Session() as sess:
+        temp_mae = sess.run(m.result())
     # print('Final result: ' , m.result().numpy())
     ############################################
 
