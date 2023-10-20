@@ -14,14 +14,16 @@ from keras.models import Sequential
 
 eps = np.finfo(np.float64).eps
 
+
 def class_mae(y_true, y_pred): # calculate mean absolute error
-    return (K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1))
+    # return K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1)
+    return K.mean(K.abs(y_pred - y_true), axis=-1)
 
 
 def count(audio, model, scaler, y_true): #, y_true
     # compute STFT
     # len(audio) (80000,) (D*fs, D = 5s, fs = 16KHz)
-    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T # hop length: 10ms(hop size) * fs
+    X = np.abs(librosa.stft(audio, n_fft=400, hop_length=160)).T  # hop length: 10ms(hop size) * fs
 
     # apply global (featurewise) standardization to mean1, var0
     X = scaler.transform(X)
@@ -39,7 +41,7 @@ def count(audio, model, scaler, y_true): #, y_true
     if len(model.input_shape) == 4:
         X = X[:, np.newaxis, ...]
 
-    ys = model.predict(X, verbose=0) # as it is X is (1, 1, 500, 201)
+    ys = model.predict(X, verbose=0)  # as it is X is (1, 1, 500, 201)
 
     # trying to recreate the mae results
     y_pred = tf.convert_to_tensor(ys)
@@ -116,7 +118,7 @@ if __name__ == '__main__':
     label = np.zeros(11)
     final_mae = []
 
-    for filename in base_path.glob("*.wav"):
+    for filename in base_path.glob("5_*.wav"):
         audio, sr = sf.read(filename, always_2d=True)
 
         name = os.path.basename(filename)
@@ -133,6 +135,7 @@ if __name__ == '__main__':
         final_mae.append(result_mae)
         break
 
+    print("list's length:", len(final_mae))
     print("averaged MAE: ", np.mean(final_mae))
     print("std MAE: " , np.std(final_mae))
     # print("Speaker Count Estimate: ", estimate)
