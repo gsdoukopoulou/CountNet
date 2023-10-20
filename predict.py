@@ -59,7 +59,7 @@ def count(audio, model, scaler, y_true): #, y_true
     print("y_pred:", y_pred)
     print("y_true:", y_true)
     y_true = tf.cast(y_true , tf.float32)
-    mae = np.mean(np.abs(y_true - y_pred))
+    mae = K.mean(K.abs(y_true - y_pred))
     with tf.Session() as sess:
         temp_mae = sess.run(mae)
     ############################################
