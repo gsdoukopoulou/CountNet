@@ -58,6 +58,7 @@ def count(audio, model, scaler, y_true): #, y_true
     ############################################
     m = tf.keras.metrics.MeanAbsoluteError()
     m.update_state(y_pred, y_true)
+    temp_mae = m.result().numpy()
     # print('Final result: ' , m.result().numpy())
     ############################################
 
@@ -65,7 +66,7 @@ def count(audio, model, scaler, y_true): #, y_true
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
     # likely value is the number of speakers
-    return np.argmax(ys, axis=1)[0], m.result().numpy()  # instead of temp_mae # index of maximum value ##temp_mae
+    return np.argmax(ys, axis=1)[0], temp_mae  # instead of temp_mae # index of maximum value ##temp_mae
 
 
 if __name__ == '__main__':
