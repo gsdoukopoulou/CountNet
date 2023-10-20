@@ -16,8 +16,7 @@ eps = np.finfo(np.float64).eps
 
 
 def class_mae(y_true, y_pred): # calculate mean absolute error
-    # return K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1)
-    return K.mean(K.abs(y_pred - y_true), axis=-1)
+    return K.mean(K.abs(K.argmax(y_pred, axis=-1) - K.argmax(y_true, axis=-1)),axis=-1)
 
 
 def count(audio, model, scaler, y_true): #, y_true
@@ -44,21 +43,28 @@ def count(audio, model, scaler, y_true): #, y_true
     ys = model.predict(X, verbose=0)  # as it is X is (1, 1, 500, 201)
 
     # trying to recreate the mae results
-    y_pred = tf.convert_to_tensor(ys)
-    class_mae_result = class_mae(y_true, y_pred)
+    y_pred = np.zeros(11)
+    y_pred[np.argmax(ys, axis=-1)] = 1
 
-    with tf.Session() as sess:
-        temp_mae = sess.run(class_mae_result)
-        # print(sess.run(y_pred))
-        # print(sess.run(K.argmax(y_pred, axis=-1)))
+    # y_pred = tf.convert_to_tensor(ys)
+    # class_mae_result = class_mae(y_true, y_pred)
 
-    print(temp_mae)
+    # with tf.Session() as sess:
+    #     temp_mae = sess.run(class_mae_result)
+    #     # print(sess.run(y_pred))
+    #     # print(sess.run(K.argmax(y_pred, axis=-1)))
+
+    ############################################
+    m = tf.keras.metrics.MeanAbsoluteError()
+    m.update_state(y_pred, y_true)
+    # print('Final result: ' , m.result().numpy())
+    ############################################
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
     # value in this vector. Meaning that the index of the highest
     # likely value is the number of speakers
-    return np.argmax(ys, axis=1)[0], temp_mae # index of maximum value ##temp_mae
+    return np.argmax(ys, axis=1)[0], m.result().numpy()  # instead of temp_mae # index of maximum value ##temp_mae
 
 
 if __name__ == '__main__':
@@ -129,7 +135,8 @@ if __name__ == '__main__':
         else:
             label[-1] = 1
 
-        y_true = tf.convert_to_tensor(label)
+        y_true = label
+        # y_true = tf.convert_to_tensor(label)
         audio = np.mean(audio, axis=1)
         estimate, result_mae = count(audio, model, scaler, y_true)
         final_mae.append(result_mae)
@@ -137,8 +144,8 @@ if __name__ == '__main__':
 
     print("list's length:", len(final_mae))
     print("averaged MAE: ", np.mean(final_mae))
-    print("std MAE: " , np.std(final_mae))
-    # print("Speaker Count Estimate: ", estimate)
+    print("std MAE: ", np.std(final_mae))
+    print("Speaker Count Estimate: ", estimate)
     ################################################
 
 
