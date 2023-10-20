@@ -49,6 +49,7 @@ def count(audio, model, scaler, y_true): #, y_true
         temp_mae = sess.run(class_mae_result)
         # print(sess.run(y_pred))
         # print(sess.run(K.argmax(y_pred, axis=-1)))
+
     print(temp_mae)
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
