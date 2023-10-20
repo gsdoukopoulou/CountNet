@@ -46,7 +46,6 @@ def count(audio, model, scaler, y_true): #, y_true
 
     y_pred = np.zeros(11)
     y_pred[np.argmax(ys, axis=-1)] = 1
-    print("y_pred:" , y_pred)
     y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
     # class_mae_result = class_mae(y_true, y_pred)
     #
@@ -126,7 +125,7 @@ if __name__ == '__main__':
     label = np.zeros(11)
     final_mae = []
 
-    for filename in base_path.glob("5_*.wav"):
+    for filename in base_path.glob("*.wav"):
         audio, sr = sf.read(filename, always_2d=True)
 
         name = os.path.basename(filename)
@@ -137,12 +136,10 @@ if __name__ == '__main__':
         else:
             label[-1] = 1
 
-        print("y_true:" , label)
         y_true = tf.convert_to_tensor(label)
         audio = np.mean(audio, axis=1)
         estimate, result_mae = count(audio, model, scaler, y_true)
         final_mae.append(result_mae)
-        break
 
     print("list's length:", len(final_mae))
     print("averaged MAE: ", np.mean(final_mae))
