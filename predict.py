@@ -56,6 +56,8 @@ def count(audio, model, scaler, y_true): #, y_true
     #     # print(sess.run(K.argmax(y_pred, axis=-1)))
 
     ############################################
+    print("y_pred:", y_pred)
+    print("y_true:", y_true)
     m = tf.metrics.mean_absolute_error(y_true, y_pred)
     with tf.Session() as sess:
         temp_mae = sess.run(m)
