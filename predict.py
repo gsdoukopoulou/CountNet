@@ -44,21 +44,19 @@ def count(audio, model, scaler, y_true): #, y_true
 
     # trying to recreate the mae results
 
-    y_pred = np.zeros(11)
-    y_pred[np.argmax(ys, axis=-1)] = 1
-    y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
-    # class_mae_result = class_mae(y_true, y_pred)
-    #
-    # with tf.Session() as sess:
-    #     temp_mae = sess.run(class_mae_result)
-        # print(sess.run(y_pred))
-        # print(sess.run(K.argmax(y_pred, axis=-1)))
+    # y_pred = np.zeros(11)
+    # y_pred[np.argmax(ys, axis=-1)] = 1
+    # y_pred = tf.convert_to_tensor(np.squeeze(ys, axis=0))
+    class_mae_result = class_mae(y_true, ys)
+
+    with tf.Session() as sess:
+        temp_mae = sess.run(class_mae_result)
 
     ############################################
-    y_true = tf.cast(y_true, tf.float32)
-    mae = K.mean(K.abs(y_true - y_pred))
-    with tf.Session() as sess:
-        temp_mae = sess.run(mae)
+    # y_true = tf.cast(y_true, tf.float32)
+    # mae = K.mean(K.abs(y_true - y_pred))
+    # with tf.Session() as sess:
+    #     temp_mae = sess.run(mae)
     ############################################
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
@@ -98,7 +96,7 @@ if __name__ == '__main__':
     model.add(Dense(11 , name='dense_1'))
     model.add(Activation('softmax' , name='activation_1'))
 
-    model.summary()
+    # model.summary()
     model.compile(optimizer='adam' , loss='categorical_crossentropy' , metrics=[class_mae])
 
     model.load_weights('models/CRNN.h5')
