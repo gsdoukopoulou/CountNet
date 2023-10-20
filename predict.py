@@ -49,7 +49,7 @@ def count(audio, model, scaler, y_true): #, y_true
         temp_mae = sess.run(class_mae_result)
         # print(sess.run(y_pred))
         # print(sess.run(K.argmax(y_pred, axis=-1)))
-
+    print(temp_mae)
 
     # ys is a vector with length 11 (for k = [0,...,10]) and to each class
     # a probability is assigned. Argmax yields the index of the highest
@@ -130,6 +130,7 @@ if __name__ == '__main__':
         audio = np.mean(audio, axis=1)
         estimate, result_mae = count(audio, model, scaler, y_true)
         final_mae.append(result_mae)
+        break
 
     print("averaged MAE: ", np.mean(final_mae))
     print("std MAE: " , np.std(final_mae))
